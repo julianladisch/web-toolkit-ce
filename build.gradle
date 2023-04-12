@@ -87,7 +87,7 @@ dependencies {
     implementation "org.grails.plugins:events"
     implementation "org.grails.plugins:views-json"
     implementation "org.grails.plugins:views-json-templates"
-    profile "org.grails.profiles:rest-api"
+    profile "org.grails.profiles:rest-api-plugin"
     runtimeOnly "org.glassfish.web:el-impl:2.2.1-b05"
     runtimeOnly "com.h2database:h2"
     runtimeOnly "org.apache.tomcat:tomcat-jdbc"
@@ -138,3 +138,16 @@ tasks.withType(GroovyCompile) {
 tasks.withType(Test) {
     useJUnitPlatform()
 }
+
+tasks.named('bootWarMainClassName') { it.mustRunAfter(tasks.named('compileGsonViews')) }
+tasks.named('compileIntegrationTestGroovy') { it.mustRunAfter(tasks.named('compileGsonViews')) }
+tasks.named('compileIntegrationTestGroovy') { it.mustRunAfter(tasks.named('compileGsonViews')) }
+tasks.named('compileTestGroovy') { it.mustRunAfter(tasks.named('compileGsonViews')) }
+tasks.named('test') { it.mustRunAfter(tasks.named('compileGsonViews')) }
+tasks.named('integrationTest') { it.mustRunAfter(tasks.named('compileGsonViews')) }
+tasks.named('mergeTestReports') { it.mustRunAfter(tasks.named('test')) }
+
+bootJar {
+  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+}
+
