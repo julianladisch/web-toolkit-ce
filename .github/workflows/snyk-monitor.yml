@@ -1,0 +1,12 @@
+name: Snyk monitor (upload to snyk.io)
+on: [workflow_dispatch]
+jobs:
+  snyk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: snyk/actions/gradle-jdk17@master
+        with:
+          command: monitor
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
